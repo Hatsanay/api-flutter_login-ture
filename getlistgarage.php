@@ -5,6 +5,8 @@
 include "connect.php";
 
 
+
+
 $sql = "SELECT garageid,garagename,garagetel,garagelattitude,garagelonggitude,garageprofile,garagedeegree,garageimgid,garageonoff,ownerid,memid ,CONCAT(garagehousenum,'หมู่',garagegroup,
 ' ถนน',garageroad,' ซอย',garagealley,' ตำบล',districts.name_th,' อำเภอ',amphures.name_th,' จังหวัด',provinces.name_th,garagepostcode) AS address FROM garage 
 INNER JOIN districts ON garagedistrict = districts.id

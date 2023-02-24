@@ -1,36 +1,46 @@
 <?php
+include "connect.php";
+// $db = mysqli_connect('localhost','adminroot','1234','db_crna');
 
-	require "connect.php";
+if(!$con)
+{
+	echo "Database connection failed";
+}
 
-	if($_SERVER['REQUEST_METHOD'] == "POST"){
-		$data = array();
 
-		$username = $_POST['username'];
-		$password = $_POST['password'];
-		$level = $_POST['level'];
+    // $sqlcusid = "SELECT * FROM `members` ORDER BY memid DESC LIMIT 0,1";
+	// $all_sqlcusid = mysqli_query($con,$sqlcusid);
 
-		$cek = mysqli_query($con, "SELECT * FROM login WHERE username='$username' AND password='$password'");
-		$cekData = mysqli_fetch_array($cek);
+	// while ($sqlcusid = mysqli_fetch_array(
+    //     $all_sqlcusid,MYSQLI_ASSOC)):;
+    //     $memcusid = $sqlcusid["memid"];
+    //     $memcusid = $memcusid+1;
+    // endwhile;
 
-		if(isset($cekData)){
-			$data['status'] = 1;
-			$data['msg'] = "Data Sudah Ada!";
-			echo json_encode($data);
-		}else{
-			$query = mysqli_query($con, "INSERT INTO login VALUE(null, '$username', '$password', '$level')");
-		
-			if(isset($query)){
-				$data['status'] = 2;
-				$data['msg'] = "Berhasil Di Inputkan";
-				echo json_encode($data);
-			}else{
-				$data['status'] = 3;
-				$data['msg'] = "Cannot Add Your Data!";
-				echo json_encode($data);
-			}
+
+$username = $_POST['username'];
+$password = $_POST['password'];
+$fullname = $_POST['fullname'];
+$tel = $_POST['tel'];
+$password = $_POST['password'];
+$email = $_POST['email'];
+
+$date = date('Y-m-d H:i:s');
+$level = "1";
+$profile = "http://dik-it.com/crna-img/custommer/dedult.png";
+
+$sql = "SELECT memusername FROM members WHERE memusername = '".$username."'";
+$result = mysqli_query($con,$sql);
+$count = mysqli_num_rows($result);
+if($count == 1){
+	echo json_encode("Error");
+}else{
+	$insert = "INSERT INTO members(memusername,mempassword,memlavel,memfullname,memproflie,memtel,memdate,membersemail	) 
+	VALUES ('".$username."','".$password."','".$level."','".$fullname."','".$profile."','".$tel."','".$date."','".$email."')";
+	// $insert1 = "INSERT INTO custumer(cusfullname,custel,memid) VALUES ('".$fullname."','".$tel."','".$memcusid."')";
+		$query = mysqli_query($con,$insert);
+		if($query){
+			echo json_encode("Success");
 		}
-	}
-
-	
-
-	
+}
+?>

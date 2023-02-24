@@ -5,6 +5,7 @@
 include "connect.php";
 
 
+
 $sql = "SELECT mechanicid,mechanicfullname,sex.sexname as sex,mechanicbirthday,mechanictel,mechanicprofile,mechaniconoff,memid ,CONCAT(mechanichousenum,'หมู่',mechanicgroup,
 ' ถนน',mechanicroad,' ซอย',mechanicalley,' ตำบล',districts.name_th,' อำเภอ',amphures.name_th,' จังหวัด',provinces.name_th,mechanicpostcode) AS address FROM mechanic 
 INNER JOIN districts ON mechanicdistrict = districts.id
